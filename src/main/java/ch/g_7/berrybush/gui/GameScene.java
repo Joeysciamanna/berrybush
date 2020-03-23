@@ -1,14 +1,11 @@
 package ch.g_7.berrybush.gui;
 
 
-import ch.g_7.berrybush.common.BaseScene;
-import ch.g_7.berrybush.common.FancyAnimationTimer;
-import ch.g_7.berrybush.common.Navigator;
+import ch.g_7.berrybush.common.*;
 import javafx.animation.AnimationTimer;
-import ch.g_7.berrybush.common.KeyInputManager;
 import ch.g_7.berrybush.game.BerryBushWorld;
 
-public class GameScene extends BaseScene {
+public class GameScene extends CanvasScene {
 
     private AnimationTimer gameLoop;
     private KeyInputManager keyEventHandler;

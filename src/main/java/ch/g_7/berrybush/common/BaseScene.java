@@ -5,7 +5,7 @@ import javafx.scene.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
-public abstract class BaseScene extends Scene {
+abstract class BaseScene extends Scene {
 
     protected final Navigator navigator;
 
