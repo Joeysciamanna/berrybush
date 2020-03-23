@@ -2,14 +2,15 @@ package ch.g_7.berrybush.gui;
 
 
 import ch.g_7.berrybush.common.BaseScene;
+import ch.g_7.berrybush.common.FXMLScene;
 import ch.g_7.berrybush.common.Navigator;
 import ch.g_7.berrybush.main.Resource;
 import javafx.scene.Group;
 
-public class WelcomeScene extends BaseScene {
+public class WelcomeScene extends FXMLScene<WelcomeController> {
 
     public WelcomeScene(Navigator navigator) {
-        super(navigator);
+        super(navigator, Resource.);
         setOnKeyTyped((e)-> {
             if(e.getCharacter().equals(" ")) {
                 navigator.goTo(SceneType.GAME);

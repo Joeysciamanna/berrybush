@@ -7,15 +7,16 @@ import java.io.InputStream;
 
 public class Resource {
 
-    public static final Image START_BACKGROUND = loadImage("/start_bg.png");
-    public static final Image GAME_BACKGROUND = loadImage("/grass.png");
-    public static final Image GAME_OVER_BACKGROUND = loadImage("/lost_bg.png");
-    public static final Image GAME_WON_BACKGROUND = loadImage("/won_bg.png");
+    public static final Image START_BACKGROUND = loadImage("/images/start_bg.png");
+    public static final Image GAME_BACKGROUND = loadImage("/images/grass.png");
+    public static final Image GAME_OVER_BACKGROUND = loadImage("/images/lost_bg.png");
+    public static final Image GAME_WON_BACKGROUND = loadImage("/images/won_bg.png");
 
-    public static final Image PLAYER = loadImage("/player.png");
-    public static final Image TREE_1 = loadImage("/tree1.png");
-    public static final Image TREE_2 = loadImage("/tree2.png");
+    public static final Image PLAYER = loadImage("/images/player.png");
+    public static final Image TREE_1 = loadImage("/images/tree1.png");
+    public static final Image TREE_2 = loadImage("/images/tree2.png");
 
+    public static final
 
 
     private static Image loadImage(String path){

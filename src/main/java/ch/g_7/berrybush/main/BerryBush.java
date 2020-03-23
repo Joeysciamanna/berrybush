@@ -14,7 +14,7 @@ public class BerryBush extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("Bbc SuperMario Jump'n'Run");
+        stage.setTitle("BerryBush Online Battle Royal");
 
         Navigator navigator = new Navigator(stage);
         navigator.registerScene(SceneType.START, new WelcomeScene(navigator));
