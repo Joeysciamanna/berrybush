@@ -16,8 +16,9 @@ public class Resource {
     public static final Image TREE_1 = loadImage("/images/tree1.png");
     public static final Image TREE_2 = loadImage("/images/tree2.png");
 
-    public static final String MAIN_MENU = "/fxml/main_menu.fxml";
-
+    public static final String MAIN_MENU_FXML = "/fxml/main_menu.fxml";
+    public static final String JOIN_GAME_FXML = "/fxml/join_game.fxml";
+    public static final String NEW_GAME_FXML = "/fxml/new_game.fxml";
 
     private static Image loadImage(String path){
         InputStream stream = Resource.class.getResourceAsStream(path);

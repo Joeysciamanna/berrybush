@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import ch.g_7.berrybush.common.form.FormTextField?>
+
+
+<AnchorPane style="-fx-background-image: url('images/main_menu.png');" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.g_7.berrybush.gui.NewGameController">
+      <TextField fx:id="name" layoutX="120.0" layoutY="73.0" text="game_32424" />
+      <Label layoutX="44.0" layoutY="77.0" text="Name:" />
+      <Label layoutX="44.0" layoutY="112.0" text="Max Players:" />
+      <TextField fx:id="maxPlayers" layoutX="120.0" layoutY="108.0" text="4" />
+      <Label layoutX="44.0" layoutY="148.0" text="Open:" />
+      <RadioButton fx:id="open" layoutX="120.0" layoutY="148.0" selected="true"/>
+      <TextField fx:id="password" disable="true" layoutX="120.0" layoutY="175.0" />
+      <Label fx:id="passwordLabel" disable="true" layoutX="44.0" layoutY="179.0" text="Password:" />
+      <Button fx:id="back" layoutX="36.0" layoutY="337.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="create" layoutX="531.0" layoutY="337.0" mnemonicParsing="false" text="Create" />
+</AnchorPane>
