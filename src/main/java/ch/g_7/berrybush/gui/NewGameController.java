@@ -2,6 +2,7 @@ package ch.g_7.berrybush.gui;
 
 import ch.g_7.berrybush.common.Util;
 import ch.g_7.berrybush.common.ViewController;
+import ch.g_7.berrybush.common.Formular;
 import ch.g_7.berrybush.main.Const;
 import ch.g_7.berrybush.server.RemoteUtil;
 import ch.g_7.berrybush.server.ServiceType;
@@ -12,9 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.util.converter.NumberStringConverter;
-
-import java.awt.*;
 
 public class NewGameController extends ViewController {
 
@@ -40,7 +38,7 @@ public class NewGameController extends ViewController {
     public Button create;
 
 
-
+    private Formular formular;
     private ISessionService sessionService;
 
     public NewGameController() {
@@ -49,6 +47,10 @@ public class NewGameController extends ViewController {
 
     @FXML
     public void initialize() {
+        formular = new Formular();
+        formular.addTextField(name, (s)->Util.isValidString(s) & sessionService.);
+
+
         name.setText(RemoteUtil.invoke(sessionService::randomName));
         open.setOnMouseClicked((e)->{
             passwordLabel.setDisable(!passwordLabel.isDisabled());

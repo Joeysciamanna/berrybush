@@ -54,15 +54,7 @@ public class Util {
         return false;
     }
 
-    public static boolean validate(Node node, BooleanSupplier supplier){
-        if(!supplier.getAsBoolean()){
-            node.setStyle("-fx-text-inner-color: red;");
-            return false;
-        }else{
-            node.setStyle("-fx-text-inner-color: black;");
-            return true;
-        }
-    }
+
 
     public static void showAlert(String title, String description){
         Alert alert = new Alert(Alert.AlertType.WARNING);

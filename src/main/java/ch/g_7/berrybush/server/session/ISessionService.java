@@ -9,6 +9,8 @@ public interface ISessionService extends IService {
 
     String randomName() throws RemoteException;
 
+    boolean exists(String name) throws RemoteException;
+
     boolean create(Session session) throws RemoteException;
 
     boolean join(String sessionName) throws RemoteException;

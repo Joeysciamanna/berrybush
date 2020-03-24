@@ -1,5 +1,6 @@
 package ch.g_7.berrybush.gui;
 
+import ch.g_7.berrybush.common.Formular;
 import ch.g_7.berrybush.common.Util;
 import ch.g_7.berrybush.common.ViewController;
 import ch.g_7.berrybush.main.Const;
@@ -25,7 +26,7 @@ public class MainMenuController extends ViewController {
     @FXML
     private TextField name;
 
-
+    private Formular formular;
     private INameService nameService;
 
     public MainMenuController() {
@@ -34,45 +35,30 @@ public class MainMenuController extends ViewController {
 
     @FXML
     public void initialize() {
+        formular = new Formular();
+        formular.addTextField(name, (s)->Util.isValidString(s) &&
+                !RemoteUtil.invoke(()->nameService.exists(name.getText())));
+
+        formular.wrapSubmit(newGame, (e)->{
+            saveName();
+           getNavigator().goTo(SceneType.NEW_GAME);
+        });
+
+        formular.wrapSubmit(joinGame, (e)->{
+            saveName();
+            getNavigator().goTo(SceneType.JOIN_GAME);
+        });
+
         name.setText(RemoteUtil.invoke(nameService::randomName));
-        validateName();
-
-        saveName("", name.getText());
-        name.textProperty().addListener((observable, oldValue, newValue) -> validateName());
-
-
-        newGame.setOnMouseClicked((e)->{
-            if(validateName()) getNavigator().goTo(SceneType.NEW_GAME);
-        });
-        joinGame.setOnMouseClicked((e)->{
-            if(validateName()) getNavigator().goTo(SceneType.JOIN_GAME);
-        });
         exit.setOnMouseClicked((e)-> Platform.exit());
     }
 
-    private boolean validateName() {
-        if(Util.validate(name, ()->Util.isValidString(name.getText()))){
 
-        }
-
-        if(RemoteUtil.invoke(()->nameService.exists(name.getText()))){
-            return true;
-        }
-        Util.showAlert("Invalid UserName", "UserName is not set correctly");
-        return false;
-    }
-
-    private boolean lastWrong;
-    private void saveName(String old, String nev) {
-        System.out.println("ddd");
-        if(!lastWrong) RemoteUtil.invokeVoid(()->nameService.free(old));
-        if(!RemoteUtil.invoke(()->nameService.register(nev))){
-            name.setStyle("-fx-text-inner-color: red;");
-            lastWrong = true;
+    private void saveName() {
+        if(RemoteUtil.invoke(()->nameService.register(name.getText()))){
+            Const.setUserName(name.getText());
         }else{
-            name.setStyle("-fx-text-inner-color: black;");
-            lastWrong = false;
-            Const.setUserName(nev);
+            throw new RuntimeException("Invalid Name, User cant be registered");
         }
     }
 
