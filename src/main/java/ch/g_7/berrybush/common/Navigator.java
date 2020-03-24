@@ -29,4 +29,19 @@ public class Navigator {
         activeScene.onOpen();
     }
 
+    @SuppressWarnings("unchecked")
+    public <T> void goTo(SceneType scene, T data){
+        if (activeScene != null) {
+            activeScene.onClose();
+        }
+        activeScene = viewMap.get(scene);
+        stage.setScene(activeScene);
+        if(activeScene instanceof IDataReceiver){
+            ((IDataReceiver<T>) activeScene).receive(data);
+        }else{
+            throw new RuntimeException(scene + " does not require data");
+        }
+        activeScene.onOpen();
+    }
+
 }

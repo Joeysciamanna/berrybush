@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="fxml.JoinGame"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane style="-fx-background-image: url('images/main_menu.png');"  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.g_7.berrybush.gui.JoinGameController">
+   <bottom>
+      <BorderPane prefHeight="65.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <left>
+            <Button fx:id="back" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Back" BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <Button fx:id="join" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Join" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+   </bottom>
+   <center>
+      <TableView fx:id="table" prefHeight="335.0" prefWidth="410.0" BorderPane.alignment="CENTER">
 
-</AnchorPane>
+      </TableView>
+   </center>
+</BorderPane>

@@ -13,11 +13,13 @@ public class FXMLScene<T extends ViewController> extends BaseScene {
 
     public FXMLScene(String fxmlPath, Navigator navigator) {
         this(loadFXML(fxmlPath), navigator);
-        viewController.setScene(this);
     }
 
     private FXMLScene(T viewController, Navigator navigator){
         super(viewController.getParent(), navigator);
+        this.viewController = viewController;
+        this.viewController.setScene(this);
+        this.viewController.setNavigator(navigator);
     }
 
     private static <T extends ViewController> T  loadFXML(String fxmlPath){
@@ -35,7 +37,6 @@ public class FXMLScene<T extends ViewController> extends BaseScene {
             throw new RuntimeException(e);
         }
         viewController.setParent(parent);
-
         return viewController;
     }
 

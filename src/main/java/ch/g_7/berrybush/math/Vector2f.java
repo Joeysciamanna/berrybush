@@ -1,12 +1,13 @@
 package ch.g_7.berrybush.math;
 
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * @author Joey Sciamanna
  */
-public class Vector2f implements IVector2f {
+public class Vector2f implements IVector2f, Serializable {
 
 	public float x, y;
 

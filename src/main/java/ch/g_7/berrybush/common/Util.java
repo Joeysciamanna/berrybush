@@ -1,6 +1,7 @@
 package ch.g_7.berrybush.common;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,4 +26,32 @@ public class Util {
         return randomFormList(Arrays.asList(ts));
     }
 
+
+    public static boolean isInteger(String value){
+        if (value == null) {
+            return false;
+        }
+        try {
+            int i = Integer.parseInt(value);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isInBounds(String integer, int min, int max){
+        if(Util.isInteger(integer)){
+            int val = Integer.parseInt(integer);
+            return val >= min && val <= max;
+        }
+        return false;
+    }
+
+    public static void showAlert(String title, String description){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(title);
+        alert.setContentText(description);
+        alert.showAndWait();
+    }
 }
