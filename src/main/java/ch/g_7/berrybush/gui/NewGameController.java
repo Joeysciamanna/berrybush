@@ -75,12 +75,19 @@ public class NewGameController extends ViewController {
             return;
         }
         if(open.isSelected()){
-            if(RemoteUtil.invoke(()->sessionService.create(
+            if(!RemoteUtil.invoke(()->sessionService.create(
                     new Session(name.getText(), Integer.valueOf(maxPlayers.getText()), Const.getUserName())))){
-
+                Util.showAlert("Error", "Something went wrong");
+                return;
+            }
+        }else{
+            if(!RemoteUtil.invoke(()->sessionService.create(
+                    new Session(name.getText(), Integer.valueOf(maxPlayers.getText()), Const.getUserName(), password.getText())))){
+                Util.showAlert("Error", "Something went wrong");
+                return;
             }
         }
-
+        getNavigator().goTo(SceneType.GAME, name);
     }
 
 }

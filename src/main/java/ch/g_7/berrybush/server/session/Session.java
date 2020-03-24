@@ -1,6 +1,8 @@
 package ch.g_7.berrybush.server.session;
 
-public class Session {
+import java.io.Serializable;
+
+public class Session implements Serializable {
 
     private String name;
     private int maxPlayers;
