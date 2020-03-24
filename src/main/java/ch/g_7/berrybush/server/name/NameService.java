@@ -39,7 +39,6 @@ public class NameService extends Service implements INameService {
         while (exists(name + number)){
             number = Util.random(1, 500000);
         }
-        register(name + number);
         return name + number;
     }
 }

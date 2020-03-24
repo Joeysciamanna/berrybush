@@ -48,46 +48,31 @@ public class NewGameController extends ViewController {
     @FXML
     public void initialize() {
         formular = new Formular();
-        formular.addTextField(name, (s)->Util.isValidString(s) & sessionService.);
+        formular.addTextField(name, (s)->Util.isValidString(s) &&
+                !RemoteUtil.invoke(()->sessionService.exists(s)));
+        formular.addTextField(maxPlayers, (s)->Util.isInBounds(s, 2, 16));
+        formular.addTextField(password, (s)->(!open.isSelected()) || !password.getText().isBlank());
 
-
-        name.setText(RemoteUtil.invoke(sessionService::randomName));
         open.setOnMouseClicked((e)->{
             passwordLabel.setDisable(!passwordLabel.isDisabled());
             password.setDisable(!password.isDisabled());
         });
-        create.setOnMouseClicked((e)->createGame());
-        maxPlayers.textProperty().addListener((observable, oldValue, newValue) -> validateMaxPlayers());
 
+        formular.wrapSubmit(create, (e)->createGame());
+
+        name.setText(RemoteUtil.invoke(sessionService::randomName));
         back.setOnMouseClicked((e)->getNavigator().goTo(SceneType.MAIN_MENU));
     }
 
-    private void validateMaxPlayers() {
-        if(!Util.isInBounds(maxPlayers.getText(), 2, 16)){
-            maxPlayers.setStyle("-fx-text-inner-color: red;");
-        }else{
-            maxPlayers.setStyle("-fx-text-inner-color: black;");
-        }
-    }
-
     private void createGame() {
-        if(!Util.isInBounds(maxPlayers.getText(), 2, 16)){
-            validateMaxPlayers();
-            Util.showAlert("Invalid Input", "Max Players must be Integer");
-            return;
-        }
+        Session session;
         if(open.isSelected()){
-            if(!RemoteUtil.invoke(()->sessionService.create(
-                    new Session(name.getText(), Integer.valueOf(maxPlayers.getText()), Const.getUserName())))){
-                Util.showAlert("Error", "Something went wrong");
-                return;
-            }
+            session = new Session(name.getText(), Integer.valueOf(maxPlayers.getText()), Const.getUserName());
         }else{
-            if(!RemoteUtil.invoke(()->sessionService.create(
-                    new Session(name.getText(), Integer.valueOf(maxPlayers.getText()), Const.getUserName(), password.getText())))){
-                Util.showAlert("Error", "Something went wrong");
-                return;
-            }
+            session = new Session(name.getText(), Integer.valueOf(maxPlayers.getText()), Const.getUserName(), password.getText());
+        }
+        if(!RemoteUtil.invoke(()->sessionService.create(session))){
+            throw new RuntimeException("Invalid Name, User cant be registered");
         }
         getNavigator().goTo(SceneType.GAME, name);
     }

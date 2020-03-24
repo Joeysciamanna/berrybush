@@ -5,7 +5,6 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import ch.g_7.berrybush.common.form.FormTextField?>
 
 
 <AnchorPane style="-fx-background-image: url('images/main_menu.png');" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.g_7.berrybush.gui.NewGameController">

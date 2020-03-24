@@ -37,7 +37,7 @@ public class MainMenuController extends ViewController {
     public void initialize() {
         formular = new Formular();
         formular.addTextField(name, (s)->Util.isValidString(s) &&
-                !RemoteUtil.invoke(()->nameService.exists(name.getText())));
+                (s.equals(Const.getUserName()) || !RemoteUtil.invoke(()->nameService.exists(name.getText()))));
 
         formular.wrapSubmit(newGame, (e)->{
             saveName();
@@ -55,10 +55,10 @@ public class MainMenuController extends ViewController {
 
 
     private void saveName() {
-        if(RemoteUtil.invoke(()->nameService.register(name.getText()))){
+        if(name.getText().equals(Const.getUserName()) || RemoteUtil.invoke(()->nameService.register(name.getText()))){
             Const.setUserName(name.getText());
         }else{
-            throw new RuntimeException("Invalid Name, User cant be registered");
+            throw new RuntimeException("Invalid Name, User can't be registered");
         }
     }
 

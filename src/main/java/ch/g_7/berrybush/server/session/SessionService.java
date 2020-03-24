@@ -65,7 +65,8 @@ public class SessionService extends Service implements ISessionService {
         return sessions.stream().filter((s)->s.getName().equals(sessionName)).findFirst();
     }
 
-    private boolean exists(String sessionName){
+    @Override
+    public boolean exists(String sessionName){
         return get(sessionName).isPresent();
     }
 }

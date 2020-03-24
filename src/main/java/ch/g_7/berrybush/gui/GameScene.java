@@ -5,7 +5,7 @@ import ch.g_7.berrybush.common.*;
 import javafx.animation.AnimationTimer;
 import ch.g_7.berrybush.game.BerryBushWorld;
 
-public class GameScene extends CanvasScene {
+public class GameScene extends CanvasScene implements IDataReceiver<String> {
 
     private AnimationTimer gameLoop;
     private KeyInputManager keyEventHandler;
@@ -32,4 +32,8 @@ public class GameScene extends CanvasScene {
         gameLoop.start();
     }
 
+    @Override
+    public void receive(String s) {
+        System.out.println("Start game: " + s);
+    }
 }
