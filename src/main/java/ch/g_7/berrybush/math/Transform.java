@@ -1,6 +1,8 @@
 package ch.g_7.berrybush.math;
 
-public class Transform {
+import java.io.Serializable;
+
+public class Transform implements Serializable {
 
     private Vector2f position;
     private Vector2f scale;

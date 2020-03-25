@@ -1,17 +1,22 @@
 package ch.g_7.berrybush.framework;
 
 
+import ch.g_7.berrybush.framework.Localizable;
+import ch.g_7.berrybush.framework.Updatable;
 import ch.g_7.berrybush.framework.render.Renderable;
 import ch.g_7.berrybush.math.Transform;
 import ch.g_7.berrybush.math.Vector2f;
+import ch.g_7.berrybush.server.sync.ISynchronizable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public abstract class GameObject implements Updatable, Renderable, Localizable {
+import java.io.Serializable;
+
+public abstract class GameObject<T extends GameObjectData> implements Updatable, Renderable, Localizable, ISynchronizable<T> {
 
     private Image image;
     private boolean visible;
-    private final Transform transform;
+    private Transform transform;
 
     public GameObject(float x, float y, Image image) {
         this(x,y, (float) image.getWidth(), (float) image.getHeight());
@@ -33,13 +38,22 @@ public abstract class GameObject implements Updatable, Renderable, Localizable {
     @Override
     public void update(double deltaSeconds) { }
 
-    public Image getImage() {
-        return image;
+    @Override
+    public void applyRemoteData(T t) {
+        this.transform = t.getTransform();
+    }
+
+    public GameObjectData getGameObjectData(){
+        return new GameObjectData(transform);
     }
 
     protected void setImage(Image image) {
         this.image = image;
         this.transform.setScale(new Vector2f((float) image.getWidth(), (float) image.getHeight()));
+    }
+
+    public Image getImage() {
+        return image;
     }
 
     public boolean isVisible() {
@@ -53,5 +67,9 @@ public abstract class GameObject implements Updatable, Renderable, Localizable {
     @Override
     public Transform getTransform() {
         return transform;
+    }
+
+    public void setTransform(Transform transform) {
+        this.transform = transform;
     }
 }

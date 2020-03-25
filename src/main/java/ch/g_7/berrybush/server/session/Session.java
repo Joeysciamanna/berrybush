@@ -20,14 +20,18 @@ public class Session implements Serializable {
 
     private Session(String name, int maxPlayers, int players, boolean open, String host) {
         this(name, maxPlayers, host);
-        this.open = false;
-        this.pw = pw;
+        this.open = open;
+        this.players = players;
     }
 
     public Session(String name, int maxPlayers, String host, String pw) {
         this(name, maxPlayers, host);
         this.open = false;
         this.pw = pw;
+    }
+
+    public void addPlayer(){
+        players++;
     }
 
     public boolean hasSpace(){
@@ -40,14 +44,6 @@ public class Session implements Serializable {
 
     public Session getCleared(){
         return new Session(name, maxPlayers, players, open, host);
-    }
-
-    public String getSize() {
-        return players+"/"+maxPlayers;
-    }
-
-    public String getAccess() {
-        return open ? "public" : "private";
     }
 
     public String getName() {

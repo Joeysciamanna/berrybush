@@ -13,9 +13,9 @@ public interface ISessionService extends IService {
 
     boolean create(Session session) throws RemoteException;
 
-    boolean join(String sessionName) throws RemoteException;
+    boolean join(String sessionName, String userName) throws RemoteException;
 
-    boolean join(String sessionName, String pw) throws RemoteException;
+    boolean join(String sessionName, String userName, String pw) throws RemoteException;
 
     List<Session> getAll() throws RemoteException;
 }

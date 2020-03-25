@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane style="-fx-background-image: url('images/main_menu.png');"  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.g_7.berrybush.gui.JoinGameController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url('images/main_menu.png');" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.g_7.berrybush.gui.JoinGameController">
    <bottom>
       <BorderPane prefHeight="65.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <left>
@@ -13,6 +13,9 @@
          <right>
             <Button fx:id="join" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Join" BorderPane.alignment="CENTER" />
          </right>
+         <center>
+            <Button fx:id="refresh" mnemonicParsing="false" text="Refresh" BorderPane.alignment="CENTER" />
+         </center>
       </BorderPane>
    </bottom>
    <center>

@@ -3,11 +3,13 @@ package ch.g_7.berrybush.common;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextInputDialog;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.BooleanSupplier;
 import java.util.regex.Pattern;
@@ -55,12 +57,19 @@ public class Util {
     }
 
 
+    public static void showAlertDialog(String title, String description){
+        Alert dialog = new Alert(Alert.AlertType.WARNING);
+        dialog.setTitle(title);
+        dialog.setHeaderText(title);
+        dialog.setContentText(description);
+        dialog.showAndWait();
+    }
 
-    public static void showAlert(String title, String description){
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle(title);
-        alert.setHeaderText(title);
-        alert.setContentText(description);
-        alert.showAndWait();
+    public static Optional<String> showInputDialog(String title, String description){
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle(title);
+        dialog.setHeaderText(title);
+        dialog.setContentText(description);
+        return dialog.showAndWait();
     }
 }

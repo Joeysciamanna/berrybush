@@ -3,7 +3,9 @@ package ch.g_7.berrybush.server;
 public enum ServiceType {
 
     NAME("name"),
-    SESSION("session");
+    SESSION("session"),
+    GAME("game"),
+    PLAYER("player");
 
     private String name;
 

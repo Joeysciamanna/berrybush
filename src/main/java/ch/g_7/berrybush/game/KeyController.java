@@ -1,35 +1,40 @@
-package ch.g_7.berrybush.game.controller;
+package ch.g_7.berrybush.game;
 
 import ch.g_7.berrybush.common.KeyListener;
 import ch.g_7.berrybush.framework.Localizable;
+import ch.g_7.berrybush.framework.Updatable;
+import ch.g_7.berrybush.game.obj.Player;
 import ch.g_7.berrybush.main.Const;
-import javafx.event.EventHandler;
+import ch.g_7.berrybush.server.RemoteUtil;
+import ch.g_7.berrybush.server.player.IPlayerService;
 import javafx.scene.input.KeyEvent;
 
-public class KeyController extends Controller implements KeyListener {
+public class KeyController implements KeyListener, Updatable {
+
+    private final Localizable controllable;
 
     private boolean isLeftPressed = false;
     private boolean isRightPressed = false;
     private boolean isUpPressed = false;
     private boolean isDownPressed = false;
 
-    public KeyController(Localizable localizable) {
-        super(localizable);
+    public KeyController(Localizable controllable) {
+        this.controllable = controllable;
     }
 
     @Override
     public void update(double deltaSeconds) {
         if(isDownPressed){
-            localizable.getTransform().getPosition().y -= Const.MOVEMENT_SPEED * deltaSeconds;
+            controllable.getTransform().getPosition().y -= Const.MOVEMENT_SPEED * deltaSeconds;
         }
         if(isUpPressed){
-            localizable.getTransform().getPosition().y += Const.MOVEMENT_SPEED * deltaSeconds;
+            controllable.getTransform().getPosition().y += Const.MOVEMENT_SPEED * deltaSeconds;
         }
         if(isRightPressed){
-            localizable.getTransform().getPosition().x -= Const.MOVEMENT_SPEED * deltaSeconds;
+            controllable.getTransform().getPosition().x -= Const.MOVEMENT_SPEED * deltaSeconds;
         }
         if(isLeftPressed){
-            localizable.getTransform().getPosition().x += Const.MOVEMENT_SPEED * deltaSeconds;
+            controllable.getTransform().getPosition().x += Const.MOVEMENT_SPEED * deltaSeconds;
         }
     }
 

@@ -2,11 +2,14 @@ package ch.g_7.berrybush.gui;
 
 
 import ch.g_7.berrybush.common.*;
+import ch.g_7.berrybush.server.session.Session;
+import ch.g_7.berrybush.server.session.SessionService;
 import javafx.animation.AnimationTimer;
 import ch.g_7.berrybush.game.BerryBushWorld;
 
 public class GameScene extends CanvasScene implements IDataReceiver<String> {
 
+    private String gameName;
     private AnimationTimer gameLoop;
     private KeyInputManager keyEventHandler;
 
@@ -20,7 +23,7 @@ public class GameScene extends CanvasScene implements IDataReceiver<String> {
 
     @Override
     public void onOpen() {
-        BerryBushWorld marioWorld = new BerryBushWorld(keyEventHandler, navigator, ()->gameLoop.stop());
+        BerryBushWorld marioWorld = new BerryBushWorld(keyEventHandler, navigator, ()->gameLoop.stop(), gameName);
         marioWorld.load();
         gameLoop = new FancyAnimationTimer() {
             @Override
@@ -33,7 +36,7 @@ public class GameScene extends CanvasScene implements IDataReceiver<String> {
     }
 
     @Override
-    public void receive(String s) {
-        System.out.println("Start game: " + s);
+    public void receive(String gameName) {
+        this.gameName = gameName;
     }
 }

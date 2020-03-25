@@ -4,12 +4,10 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BooleanSupplier;
 import java.util.function.Function;
 
 public class Formular {
@@ -50,7 +48,7 @@ public class Formular {
     public void wrapSubmit(Button button, EventHandler<MouseEvent> handler){
         button.setOnMouseClicked((e)->{
             if(validate()) handler.handle(e);
-            else  Util.showAlert("Invalid Input", "Please check your input again");
+            else  Util.showAlertDialog("Invalid Input", "Please check your input again");
         });
     }
 }

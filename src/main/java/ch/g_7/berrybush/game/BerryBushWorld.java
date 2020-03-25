@@ -5,11 +5,13 @@ import ch.g_7.berrybush.common.KeyInputManager;
 import ch.g_7.berrybush.common.Navigator;
 import ch.g_7.berrybush.common.Util;
 import ch.g_7.berrybush.framework.GameWorld;
-import ch.g_7.berrybush.game.controller.Controller;
-import ch.g_7.berrybush.game.controller.KeyController;
 import ch.g_7.berrybush.game.obj.*;
 import ch.g_7.berrybush.main.Const;
 import ch.g_7.berrybush.main.Resource;
+import ch.g_7.berrybush.server.RemoteUtil;
+import ch.g_7.berrybush.server.ServiceType;
+import ch.g_7.berrybush.server.game.IGameService;
+import ch.g_7.berrybush.server.player.IPlayerService;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
@@ -17,21 +19,28 @@ import java.util.List;
 
 public class BerryBushWorld extends GameWorld {
 
-    private final List<Controller> controllers;
+    private final List<PlayerController> controllers;
 
     private final KeyInputManager keyInputManager;
     private final Navigator navigator;
 
-    public BerryBushWorld(KeyInputManager keyInputManager, Navigator navigator, Runnable stopper) {
+    private final String game;
+    private IPlayerService playerService;
+    private IGameService gameService;
+
+    public BerryBushWorld(KeyInputManager keyInputManager, Navigator navigator, Runnable stopper, String game) {
         super(stopper);
         this.keyInputManager = keyInputManager;
         this.navigator = navigator;
         this.controllers = new ArrayList<>();
+        this.game = game;
+        this.gameService = RemoteUtil.getService(ServiceType.GAME);
+        this.playerService = RemoteUtil.getService(ServiceType.PLAYER);
     }
 
     public void load() {
         Player player1 = new LocalPlayer(0,0, camera);
-        KeyController keyController = new KeyController(player1);
+        KeyController keyController = new KeyController(player1, RemoteUtil.getService(ServiceType.PLAYER));
         keyInputManager.add(keyController);
         controllers.add(keyController);
         add(player1);
@@ -40,6 +49,23 @@ public class BerryBushWorld extends GameWorld {
         for (int i = 0; i < 30; i++) {
             add(new Tree(Util.random(-Const.SCREEN_WIDTH, Const.SCREEN_WIDTH), Util.random(-Const.SCREEN_HEIGHT, Const.SCREEN_HEIGHT)));
         }
+    }
+
+    private void scanForRemotePlayers(){
+        List<String> remotePlayers = RemoteUtil.invoke(()->gameService.getVillans(game, Const.getUserName()));
+        List<Player> players = getGameObjectsOfType(Player.class);
+        for (String remotePlayer : remotePlayers) {
+            if(players.stream().noneMatch((p)->p.getName().equals(remotePlayer))){
+                addRemotePlayer(remotePlayer);
+            }
+        }
+    }
+
+    private void addRemotePlayer(String remotePlayer) {
+        Player player = new Player(0, 0, remotePlayer);
+        RemoteController controller = new RemoteController(player, playerService);
+        controllers.add(controller);
+        add(player);
     }
 
     @Override
@@ -51,8 +77,9 @@ public class BerryBushWorld extends GameWorld {
 
     @Override
     public void update(double deltaSeconds) {
+        scanForRemotePlayers();
         super.update(deltaSeconds);
-        for (Controller controller : controllers) {
+        for (PlayerController controller : controllers) {
             controller.update(deltaSeconds);
         }
     }

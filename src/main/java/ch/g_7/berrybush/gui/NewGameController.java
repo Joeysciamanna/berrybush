@@ -51,7 +51,7 @@ public class NewGameController extends ViewController {
         formular.addTextField(name, (s)->Util.isValidString(s) &&
                 !RemoteUtil.invoke(()->sessionService.exists(s)));
         formular.addTextField(maxPlayers, (s)->Util.isInBounds(s, 2, 16));
-        formular.addTextField(password, (s)->(!open.isSelected()) || !password.getText().isBlank());
+        formular.addTextField(password, (s)->open.isSelected() || !password.getText().isBlank());
 
         open.setOnMouseClicked((e)->{
             passwordLabel.setDisable(!passwordLabel.isDisabled());
@@ -72,9 +72,9 @@ public class NewGameController extends ViewController {
             session = new Session(name.getText(), Integer.valueOf(maxPlayers.getText()), Const.getUserName(), password.getText());
         }
         if(!RemoteUtil.invoke(()->sessionService.create(session))){
-            throw new RuntimeException("Invalid Name, User cant be registered");
+            throw new RuntimeException("Invalid Input, Game can't be created");
         }
-        getNavigator().goTo(SceneType.GAME, name);
+        getNavigator().goTo(SceneType.GAME, session.getName());
     }
 
 }

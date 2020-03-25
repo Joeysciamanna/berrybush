@@ -1,7 +1,10 @@
 package ch.g_7.berrybush.server.session;
 
 import ch.g_7.berrybush.common.Util;
+import ch.g_7.berrybush.server.BerryBushServer;
 import ch.g_7.berrybush.server.Service;
+import ch.g_7.berrybush.server.ServiceType;
+import ch.g_7.berrybush.server.game.GameService;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -23,6 +26,9 @@ public class SessionService extends Service implements ISessionService {
         if(exists(session.getName()))
             return false;
         sessions.add(session);
+        GameService service = BerryBushServer.getService(ServiceType.GAME);
+        service.createGame(session.getName(), session.getHost());
+        session.addPlayer();
         return true;
     }
 
@@ -37,21 +43,31 @@ public class SessionService extends Service implements ISessionService {
     }
 
     @Override
-    public boolean join(String sessionName) {
+    public boolean join(String sessionName, String userName) {
         Optional<Session> s = get(sessionName);
         if(s.isPresent()){
             Session session = s.get();
-            return session.isOpen() && session.hasSpace();
+            if(session.isOpen() && session.hasSpace()) {
+                GameService service = BerryBushServer.getService(ServiceType.GAME);
+                service.addPlayer(sessionName, userName);
+                session.addPlayer();
+                return true;
+            }
         }
         return false;
     }
 
     @Override
-    public boolean join(String sessionName, String pw) {
+    public boolean join(String sessionName, String userName, String pw) {
         Optional<Session> s = get(sessionName);
         if(s.isPresent()){
             Session session = s.get();
-            return (!session.isOpen()) && session.hasSpace() && session.pwEquals(pw);
+            if((!session.isOpen()) && session.hasSpace() && session.pwEquals(pw)){
+                GameService service = BerryBushServer.getService(ServiceType.GAME);
+                service.addPlayer(sessionName, userName);
+                session.addPlayer();
+                return true;
+            }
         }
         return false;
     }
