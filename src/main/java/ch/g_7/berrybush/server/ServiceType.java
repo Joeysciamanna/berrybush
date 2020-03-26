@@ -5,7 +5,7 @@ public enum ServiceType {
     NAME("name"),
     SESSION("session"),
     GAME("game"),
-    PLAYER("player");
+    SYNC("sync");
 
     private String name;
 

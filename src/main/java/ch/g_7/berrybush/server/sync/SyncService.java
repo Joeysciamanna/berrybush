@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 public class SyncService extends Service implements ISyncService {
 
@@ -31,4 +32,5 @@ public class SyncService extends Service implements ISyncService {
     public int genId() throws RemoteException {
         return idCounter++;
     }
+
 }

@@ -3,10 +3,7 @@ package ch.g_7.berrybush.game;
 import ch.g_7.berrybush.common.KeyListener;
 import ch.g_7.berrybush.framework.Localizable;
 import ch.g_7.berrybush.framework.Updatable;
-import ch.g_7.berrybush.game.obj.Player;
 import ch.g_7.berrybush.main.Const;
-import ch.g_7.berrybush.server.RemoteUtil;
-import ch.g_7.berrybush.server.player.IPlayerService;
 import javafx.scene.input.KeyEvent;
 
 public class KeyController implements KeyListener, Updatable {

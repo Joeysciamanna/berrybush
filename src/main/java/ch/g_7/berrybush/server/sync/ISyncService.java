@@ -4,6 +4,7 @@ import ch.g_7.berrybush.server.IService;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.function.Function;
 
 public interface ISyncService extends IService {
 

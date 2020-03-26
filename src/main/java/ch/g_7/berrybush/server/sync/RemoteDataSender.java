@@ -13,13 +13,13 @@ public class RemoteDataSender extends RemoteDataHandler {
     }
 
     @Override
-    public void update(double deltaSeconds) {
+    protected void handle() {
         for (Map.Entry<Integer, ISynchronizable<?>> entry : syncronizables.entrySet()) {
             RemoteUtil.invokeVoid(()->syncService.setData(entry.getKey(), entry.getValue().getRemoteData()));
         }
     }
 
-    protected void add(ISynchronizable<?> syncronizable){
+    public void add(ISynchronizable<?> syncronizable){
         syncronizables.put(RemoteUtil.invoke(()->syncService.genId()), syncronizable);
     }
 

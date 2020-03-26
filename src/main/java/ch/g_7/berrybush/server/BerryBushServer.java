@@ -3,8 +3,8 @@ package ch.g_7.berrybush.server;
 
 import ch.g_7.berrybush.server.game.GameService;
 import ch.g_7.berrybush.server.name.NameService;
-import ch.g_7.berrybush.server.player.PlayerService;
 import ch.g_7.berrybush.server.session.SessionService;
+import ch.g_7.berrybush.server.sync.SyncService;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -34,7 +34,7 @@ public class BerryBushServer {
         services.put(ServiceType.NAME, new NameService());
         services.put(ServiceType.SESSION, new SessionService());
         services.put(ServiceType.GAME, new GameService());
-        services.put(ServiceType.PLAYER, new PlayerService());
+        services.put(ServiceType.SYNC, new SyncService());
     }
 
     private static void setupServer() throws RemoteException, AlreadyBoundException {
