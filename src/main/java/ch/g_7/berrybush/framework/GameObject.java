@@ -4,6 +4,7 @@ package ch.g_7.berrybush.framework;
 import ch.g_7.berrybush.framework.Localizable;
 import ch.g_7.berrybush.framework.Updatable;
 import ch.g_7.berrybush.framework.render.Renderable;
+import ch.g_7.berrybush.game.obj.create.GameObjectType;
 import ch.g_7.berrybush.math.Transform;
 import ch.g_7.berrybush.math.Vector2f;
 import ch.g_7.berrybush.server.sync.ISynchronizable;
@@ -12,20 +13,24 @@ import javafx.scene.image.Image;
 
 import java.io.Serializable;
 
-public abstract class GameObject<T extends GameObjectData> implements Updatable, Renderable, Localizable, ISynchronizable<T> {
+public abstract class GameObject implements Updatable, Renderable, Localizable {
 
+    private final GameObjectType type;
+    private final int id;
+    private Transform transform;
     private Image image;
     private boolean visible;
-    private Transform transform;
 
-    public GameObject(float x, float y, Image image) {
-        this(x,y, (float) image.getWidth(), (float) image.getHeight());
+    public GameObject(GameObjectType type, int id, Vector2f position, Image image) {
+        this(type,  id, position, (float) image.getWidth(), (float) image.getHeight());
         this.image = image;
         this.visible = true;
     }
 
-    public GameObject(float x, float y, float width, float height) {
-        this.transform = new Transform(new Vector2f(x, y), new Vector2f(width, height));
+    public GameObject(GameObjectType type, int id, Vector2f position, float width, float height) {
+        this.type = type;
+        this.id = id;
+        this.transform = new Transform(position, new Vector2f(width, height));
     }
 
     @Override
@@ -38,13 +43,8 @@ public abstract class GameObject<T extends GameObjectData> implements Updatable,
     @Override
     public void update(double deltaSeconds) { }
 
-    @Override
-    public void applyRemoteData(T t) {
-        this.transform = t.getTransform();
-    }
-
-    public GameObjectData getGameObjectData(){
-        return new GameObjectData(transform);
+    protected GameObjectData getData(){
+        return new GameObjectData(id, type, transform);
     }
 
     protected void setImage(Image image) {
