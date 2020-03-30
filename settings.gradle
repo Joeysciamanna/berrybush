@@ -1,2 +1,3 @@
 rootProject.name = 'SuperMarioDyn4j'
+include 'server'
 

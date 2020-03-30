@@ -5,7 +5,6 @@ import ch.g_7.berrybush.common.KeyInputManager;
 import ch.g_7.berrybush.common.Navigator;
 import ch.g_7.berrybush.common.Util;
 import ch.g_7.berrybush.framework.GameWorld;
-import ch.g_7.berrybush.game.obj.LocalPlayer;
 import ch.g_7.berrybush.game.obj.Player;
 import ch.g_7.berrybush.game.obj.Tree;
 import ch.g_7.berrybush.main.Const;

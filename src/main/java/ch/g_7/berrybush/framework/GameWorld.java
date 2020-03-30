@@ -2,6 +2,7 @@ package ch.g_7.berrybush.framework;
 
 import ch.g_7.berrybush.framework.render.Camera;
 import ch.g_7.berrybush.framework.render.Renderer;
+import ch.g_7.berrybush.game.obj.GameObject;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 public abstract class GameWorld {
 
-    private final List<GameObject<?>> gameObjects;
+    private final List<GameObject> gameObjects;
 
     protected final Camera camera;
     private final Renderer renderer;
@@ -31,7 +32,7 @@ public abstract class GameWorld {
     }
 
     public void update(double deltaSeconds){
-        for (GameObject<?> gameObject : getGameObjects()) {
+        for (GameObject gameObject : getGameObjects()) {
             gameObject.update(deltaSeconds);
         }
     }
@@ -40,12 +41,12 @@ public abstract class GameWorld {
         renderer.render(gameObjects, gc);
     }
 
-    public List<GameObject<?>> getGameObjects(){
+    public List<GameObject> getGameObjects(){
         return gameObjects;
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends GameObject<?>> List<T> getGameObjectsOfType(Class<T> classToFind) {
+    public <T extends GameObject> List<T> getGameObjectsOfType(Class<T> classToFind) {
         List<T> resultList = new ArrayList<T>();
         for (Object o : gameObjects) {
             if (classToFind.isAssignableFrom(o.getClass()))
@@ -54,12 +55,12 @@ public abstract class GameWorld {
         return resultList;
     }
 
-    public <T extends GameObject<?>> Optional<T> getGameObjectOfType(Class<T> type){
+    public <T extends GameObject> Optional<T> getGameObjectOfType(Class<T> type){
         List<T> gameObjects = getGameObjectsOfType(type);
         return gameObjects.isEmpty() ? Optional.empty() : Optional.of(gameObjects.get(0));
     }
 
-    public void add(GameObject<?> object){
+    public void add(GameObject object){
         gameObjects.add(object);
     }
 
@@ -67,12 +68,12 @@ public abstract class GameWorld {
         gameObjects.clear();
     }
 
-    public void remove(GameObject<?> object){
+    public void remove(GameObject object){
         gameObjects.remove(object);
     }
 
-    public void removeAll(Class<? extends GameObject<?>> type){
-        for (GameObject<?> gameObject : getGameObjects()) {
+    public void removeAll(Class<? extends GameObject> type){
+        for (GameObject gameObject : getGameObjects()) {
             remove(gameObject);
         }
     }

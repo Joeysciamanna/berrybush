@@ -41,6 +41,7 @@ public class GameService extends Service implements IGameService {
         Game game = new Game(gameName);
         game.add(player);
         games.add(game);
+        game.start();
     }
 
     private Game getGame(String gameName){

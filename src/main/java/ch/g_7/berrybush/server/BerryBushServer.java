@@ -34,7 +34,6 @@ public class BerryBushServer {
         services.put(ServiceType.NAME, new NameService());
         services.put(ServiceType.SESSION, new SessionService());
         services.put(ServiceType.GAME, new GameService());
-        services.put(ServiceType.SYNC, new SyncService());
     }
 
     private static void setupServer() throws RemoteException, AlreadyBoundException {

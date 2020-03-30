@@ -1,6 +1,6 @@
 package ch.g_7.berrybush.game.obj.create;
 
-import ch.g_7.berrybush.framework.GameObject;
+import ch.g_7.berrybush.game.obj.GameObject;
 import ch.g_7.berrybush.framework.GameObjectData;
 import ch.g_7.berrybush.game.obj.Player;
 import ch.g_7.berrybush.game.obj.Tree;

@@ -1,26 +1,31 @@
 package ch.g_7.berrybush.server.game;
 
 import ch.g_7.berrybush.game.obj.Player;
+import ch.g_7.berrybush.math.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game {
+public class Game extends Loop {
 
-    private String name;
-    private List<String> players;
+    private final String name;
+    private final List<String> players;
+
+    private final World world;
 
     public Game(String name) {
         this.name = name;
         this.players = new ArrayList<>();
+        this.world = new World();
     }
 
     public String getName() {
         return name;
     }
 
-    public boolean add(String s) {
-        return players.add(s);
+    public void add(String s) {
+        world.add(new Player(new Vector2f(), s));
+        players.add(s);
     }
 
     public List<String> getPlayers() {
@@ -28,4 +33,8 @@ public class Game {
     }
 
 
+    @Override
+    protected void run(float deltaSeconds) {
+        world.safeForEach((o)->o.update(deltaSeconds));
+    }
 }

@@ -1,14 +1,14 @@
 package ch.g_7.berrybush.game.obj;
 
 import ch.g_7.berrybush.common.Util;
-import ch.g_7.berrybush.framework.GameObject;
+import ch.g_7.berrybush.game.view_model.ImageType;
 import ch.g_7.berrybush.main.Resource;
 import ch.g_7.berrybush.math.Vector2f;
 
 public class Tree extends GameObject {
 
     public Tree(Vector2f position) {
-        super(position, Util.randomFormList(Resource.TREE_1, Resource.TREE_2));
+        super(position, Util.randomFormList(ImageType.TREE_1, ImageType.TREE_2));
     }
 
 }
