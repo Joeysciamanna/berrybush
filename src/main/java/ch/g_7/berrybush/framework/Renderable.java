@@ -1,4 +1,4 @@
-package ch.g_7.berrybush.framework.render;
+package ch.g_7.berrybush.framework;
 
 import ch.g_7.berrybush.framework.Localizable;
 import ch.g_7.berrybush.math.Transform;

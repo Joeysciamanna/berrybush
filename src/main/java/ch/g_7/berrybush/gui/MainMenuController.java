@@ -37,7 +37,7 @@ public class MainMenuController extends ViewController {
     public void initialize() {
         formular = new Formular();
         formular.addTextField(name, (s)->Util.isValidString(s) &&
-                (s.equals(Const.getUserName()) || !RemoteUtil.invoke(()->nameService.exists(name.getText()))));
+                (s.equals(Const.getUserName()) || !RemoteUtil.get(()->nameService.exists(name.getText()))));
 
         formular.wrapSubmit(newGame, (e)->{
             saveName();
@@ -49,13 +49,13 @@ public class MainMenuController extends ViewController {
             getNavigator().goTo(SceneType.JOIN_GAME);
         });
 
-        name.setText(RemoteUtil.invoke(nameService::randomName));
+        name.setText(RemoteUtil.get(nameService::randomName));
         exit.setOnMouseClicked((e)-> Platform.exit());
     }
 
 
     private void saveName() {
-        if(name.getText().equals(Const.getUserName()) || RemoteUtil.invoke(()->nameService.register(name.getText()))){
+        if(name.getText().equals(Const.getUserName()) || RemoteUtil.get(()->nameService.register(name.getText()))){
             Const.setUserName(name.getText());
         }else{
             throw new RuntimeException("Invalid Name, User can't be registered");

@@ -6,6 +6,7 @@ import ch.g_7.berrybush.common.Formular;
 import ch.g_7.berrybush.main.Const;
 import ch.g_7.berrybush.server.RemoteUtil;
 import ch.g_7.berrybush.server.ServiceType;
+import ch.g_7.berrybush.server.game.IGameService;
 import ch.g_7.berrybush.server.session.ISessionService;
 import ch.g_7.berrybush.server.session.Session;
 import javafx.fxml.FXML;
@@ -13,6 +14,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+
+import java.util.Optional;
 
 public class NewGameController extends ViewController {
 
@@ -49,7 +52,7 @@ public class NewGameController extends ViewController {
     public void initialize() {
         formular = new Formular();
         formular.addTextField(name, (s)->Util.isValidString(s) &&
-                !RemoteUtil.invoke(()->sessionService.exists(s)));
+                !RemoteUtil.get(()->sessionService.exists(s)));
         formular.addTextField(maxPlayers, (s)->Util.isInBounds(s, 2, 16));
         formular.addTextField(password, (s)->open.isSelected() || !password.getText().isBlank());
 
@@ -60,7 +63,7 @@ public class NewGameController extends ViewController {
 
         formular.wrapSubmit(create, (e)->createGame());
 
-        name.setText(RemoteUtil.invoke(sessionService::randomName));
+        name.setText(RemoteUtil.get(sessionService::randomName));
         back.setOnMouseClicked((e)->getNavigator().goTo(SceneType.MAIN_MENU));
     }
 
@@ -71,10 +74,11 @@ public class NewGameController extends ViewController {
         }else{
             session = new Session(name.getText(), Integer.valueOf(maxPlayers.getText()), Const.getUserName(), password.getText());
         }
-        if(!RemoteUtil.invoke(()->sessionService.create(session))){
+        IGameService gameService = RemoteUtil.get(()->sessionService.create(session));
+        if(gameService == null){
             throw new RuntimeException("Invalid Input, Game can't be created");
         }
-        getNavigator().goTo(SceneType.GAME, session.getName());
+        getNavigator().goTo(SceneType.GAME, gameService);
     }
 
 }

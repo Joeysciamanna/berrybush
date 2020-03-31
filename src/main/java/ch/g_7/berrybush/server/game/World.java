@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class World {
 
@@ -27,6 +29,14 @@ public class World {
         for (GameObject gameObject : gameObjects) {
             consumer.accept(gameObject);
         }
+    }
+
+    public <T extends GameObject> List<T> getGameObjectsOfTypeWhere(Class<T> type, Predicate<T> predicate) {
+        return getGameObjectsOfType(type).stream().filter(predicate).collect(Collectors.toList());
+    }
+
+    public <T extends GameObject> Optional<T> getGameObjectOfTypeWhere(Class<T> type, Predicate<T> predicate) {
+        return getGameObjectsOfType(type).stream().filter(predicate).findFirst();
     }
 
     @SuppressWarnings("unchecked")

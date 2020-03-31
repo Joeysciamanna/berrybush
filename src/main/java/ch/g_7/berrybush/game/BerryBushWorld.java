@@ -2,99 +2,99 @@ package ch.g_7.berrybush.game;
 
 
 import ch.g_7.berrybush.common.KeyInputManager;
+import ch.g_7.berrybush.common.Loop;
 import ch.g_7.berrybush.common.Navigator;
 import ch.g_7.berrybush.common.Util;
-import ch.g_7.berrybush.framework.GameWorld;
+import ch.g_7.berrybush.framework.Camera;
+import ch.g_7.berrybush.framework.Renderer;
 import ch.g_7.berrybush.game.obj.Player;
 import ch.g_7.berrybush.game.obj.Tree;
+import ch.g_7.berrybush.game.view_model.BasicViewModel;
 import ch.g_7.berrybush.main.Const;
 import ch.g_7.berrybush.main.Resource;
+
 import ch.g_7.berrybush.server.RemoteUtil;
-import ch.g_7.berrybush.server.ServiceType;
+import ch.g_7.berrybush.server.game.ControllService;
+import ch.g_7.berrybush.server.game.GameService;
+import ch.g_7.berrybush.server.game.IControllService;
 import ch.g_7.berrybush.server.game.IGameService;
-import ch.g_7.berrybush.server.sync.ISyncService;
-import ch.g_7.berrybush.server.sync.RemoteDataSender;
-import ch.g_7.berrybush.server.sync.RemoteDataSyncronizer;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class BerryBushWorld extends GameWorld {
+public class BerryBushWorld extends Loop {
+
+    private List<BasicViewModel> viewModels;
+
+    protected final Camera camera;
+    private final Renderer renderer;
+
+    protected Runnable stopper;
 
     private final KeyInputManager keyInputManager;
     private KeyController keyController;
     private final Navigator navigator;
-    private final String game;
 
     private final IGameService gameService;
-    private final ISyncService syncService;
+    private final IControllService controllService;
 
-    private final RemoteDataSender remoteDataSender;
-    private final RemoteDataSyncronizer remoteDataSyncronizer;
 
-    public BerryBushWorld(KeyInputManager keyInputManager, Navigator navigator, Runnable stopper, String game) {
-        super(stopper);
+    public BerryBushWorld(KeyInputManager keyInputManager, Navigator navigator, Runnable stopper, IGameService gameService) {
         this.keyInputManager = keyInputManager;
         this.navigator = navigator;
-        this.game = game;
-        this.gameService = RemoteUtil.getService(ServiceType.GAME);
-        this.syncService = RemoteUtil.getService(ServiceType.SYNC);
-        this.remoteDataSender = new RemoteDataSender(syncService);
-        this.remoteDataSyncronizer = new RemoteDataSyncronizer(syncService);
+        this.stopper = stopper;
 
+        this.camera = new Camera();
+        this.renderer = new Renderer(camera);
+        this.viewModels = new ArrayList<>();
+
+        this.gameService = gameService;
+        this.controllService = RemoteUtil.get(()->gameService.getControllService(Const.getUserName()));
     }
 
-    public void load() {
-        Player player = new LocalPlayer(0,0, camera);
-        keyController = new KeyController(player);
+    public synchronized void start() {
+        super.start();
+        keyController = new KeyController(controllService);
         keyInputManager.add(keyController);
-        remoteDataSender.add(player);
-        add(player);
-
-
-        for (int i = 0; i < 30; i++) {
-            add(new Tree(Util.random(-Const.SCREEN_WIDTH, Const.SCREEN_WIDTH), Util.random(-Const.SCREEN_HEIGHT, Const.SCREEN_HEIGHT)));
-        }
-
-        remoteDataSender.start();
-        remoteDataSyncronizer.start();
+        setViewModels(RemoteUtil.get(gameService::getAllViewModels));
     }
-
 
     @Override
-    protected void stop() {
-        remoteDataSender.stop();
-        remoteDataSyncronizer.stop();
+    protected void run(double deltaSeconds) {
+        List<BasicViewModel> viewModels = RemoteUtil.get(gameService::getChangedViewModels);
+        for (BasicViewModel viewModel : this.viewModels) {
+            if(viewModel)
+        }
+        timer.sleep(1);
+    }
+
+
+
+    public synchronized void render(GraphicsContext gc){
+        gc.clearRect(0, 0, Const.SCREEN_WIDTH, Const.SCREEN_HEIGHT);
+        gc.drawImage(Resource.GAME_BACKGROUND, 0, 0, Const.SCREEN_WIDTH, Const.SCREEN_HEIGHT);
+        renderer.render(viewModels, gc);
+    }
+
+
+    public synchronized void stop() {
+        stopper.run();
         super.stop();
     }
 
-    private void scanForRemotePlayers(){
-        List<String> remotePlayers = RemoteUtil.invoke(()->gameService.getVillans(game, Const.getUserName()));
-        List<Player> players = getGameObjectsOfType(Player.class);
-        for (String remotePlayer : remotePlayers) {
-            if(players.stream().noneMatch((p)->p.getName().equals(remotePlayer))){
-                addRemotePlayer(remotePlayer);
+    private boolean contains(int id){
+        for (BasicViewModel viewModel : viewModels) {
+            if (viewModel.getId() == id){
+                return true;
             }
         }
+        return false;
     }
 
-    private void addRemotePlayer(String name) {
-        Player player = new Player(0, 0, name);
-        remoteDataSyncronizer.add(player, RemoteUtil.invoke(()->syncService.getIdOf(Player::getName, name)));
-        add(player);
+    private synchronized void  setViewModels(List<BasicViewModel> viewModels){
+        this.viewModels = viewModels;
     }
 
-    @Override
-    public void render(GraphicsContext gc) {
-        gc.clearRect(0, 0, Const.SCREEN_WIDTH, Const.SCREEN_HEIGHT);
-        gc.drawImage(Resource.GAME_BACKGROUND, 0, 0, Const.SCREEN_WIDTH, Const.SCREEN_HEIGHT);
-        super.render(gc);
-    }
 
-    @Override
-    public void update(double deltaSeconds) {
-        scanForRemotePlayers();
-        keyController.update(deltaSeconds);
-        super.update(deltaSeconds);
-    }
 }

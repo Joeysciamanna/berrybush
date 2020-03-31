@@ -7,6 +7,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class RemoteUtil {
 
@@ -31,7 +32,7 @@ public class RemoteUtil {
         }
     }
 
-    public static <T> T invoke(RemoteFunction<T> function){
+    public static <T> T get(RemoteFunction<T> function){
         try {
             return function.invoke();
         } catch (RemoteException e) {
@@ -39,12 +40,14 @@ public class RemoteUtil {
         }
     }
 
-    public static void invokeVoid(VoidRemoteFunction function){
-        try {
-            function.invoke();
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+    public static void async(VoidRemoteFunction function){
+        CompletableFuture.runAsync(()->{
+            try {
+                function.invoke();
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @FunctionalInterface

@@ -1,4 +1,4 @@
-package ch.g_7.berrybush.framework.render;
+package ch.g_7.berrybush.framework;
 
 import ch.g_7.berrybush.main.Const;
 import ch.g_7.berrybush.math.Transform;
@@ -22,7 +22,7 @@ public class Renderer {
             gc.save();
             gc.rotate(-camera.getRotation());
             gc.translate(camera.getPosition().x + Const.SCREEN_WIDTH / 2, camera.getPosition().y + Const.SCREEN_HEIGHT / 2);
-
+            System.out.println(renderable.getTransform().getPosition());
             translate(renderable.getTransform(), gc);
             renderable.draw(gc);
             gc.restore();

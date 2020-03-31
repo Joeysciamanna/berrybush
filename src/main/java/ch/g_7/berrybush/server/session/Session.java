@@ -1,15 +1,20 @@
 package ch.g_7.berrybush.server.session;
 
+import ch.g_7.berrybush.server.game.GameService;
+
 import java.io.Serializable;
 
 public class Session implements Serializable {
 
-    private String name;
-    private int maxPlayers;
+    private final String name;
+    private final int maxPlayers;
     private int players;
     private boolean open;
-    private String host;
+    private final String host;
     private String pw;
+
+    private GameService gameService;
+
 
     public Session(String name, int maxPlayers, String host) {
         this.name = name;
@@ -66,5 +71,11 @@ public class Session implements Serializable {
         return host;
     }
 
+    public GameService getGameService() {
+        return gameService;
+    }
 
+    protected void setGameService(GameService gameService) {
+        this.gameService = gameService;
+    }
 }

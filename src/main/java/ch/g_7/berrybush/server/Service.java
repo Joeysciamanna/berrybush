@@ -9,8 +9,14 @@ public abstract class Service extends UnicastRemoteObject implements IService{
 
     private static final long serialVersionUID = 1L;
 
-    public Service() throws RemoteException {
+    private final String name;
+
+    public Service(String name) throws RemoteException {
         super();
+        this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
 }

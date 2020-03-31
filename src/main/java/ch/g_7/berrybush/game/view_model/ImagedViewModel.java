@@ -9,8 +9,8 @@ public class ImagedViewModel extends BasicViewModel {
 
     private ImageType imageType;
 
-    public ImagedViewModel(Vector2f position, ImageType imageType) {
-        super(position, new Vector2f((float) imageType.getImage().getWidth(), (float) imageType.getImage().getHeight()));
+    public ImagedViewModel(Vector2f position, ImageType imageType, int id) {
+        super(position, new Vector2f((float) imageType.getImage().getWidth(), (float) imageType.getImage().getHeight()), id);
         this.imageType = imageType;
     }
 

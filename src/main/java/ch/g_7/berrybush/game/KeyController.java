@@ -4,35 +4,17 @@ import ch.g_7.berrybush.common.KeyListener;
 import ch.g_7.berrybush.framework.Localizable;
 import ch.g_7.berrybush.framework.Updatable;
 import ch.g_7.berrybush.main.Const;
+import ch.g_7.berrybush.server.RemoteUtil;
+import ch.g_7.berrybush.server.game.IControllService;
 import javafx.scene.input.KeyEvent;
 
-public class KeyController implements KeyListener, Updatable {
+public class KeyController implements KeyListener {
 
-    private final Localizable controllable;
+    private final IControllService controllService;
 
-    private boolean isLeftPressed = false;
-    private boolean isRightPressed = false;
-    private boolean isUpPressed = false;
-    private boolean isDownPressed = false;
 
-    public KeyController(Localizable controllable) {
-        this.controllable = controllable;
-    }
-
-    @Override
-    public void update(double deltaSeconds) {
-        if(isDownPressed){
-            controllable.getTransform().getPosition().y -= Const.MOVEMENT_SPEED * deltaSeconds;
-        }
-        if(isUpPressed){
-            controllable.getTransform().getPosition().y += Const.MOVEMENT_SPEED * deltaSeconds;
-        }
-        if(isRightPressed){
-            controllable.getTransform().getPosition().x -= Const.MOVEMENT_SPEED * deltaSeconds;
-        }
-        if(isLeftPressed){
-            controllable.getTransform().getPosition().x += Const.MOVEMENT_SPEED * deltaSeconds;
-        }
+    public KeyController(IControllService controllService) {
+        this.controllService = controllService;
     }
 
     @Override
@@ -40,16 +22,16 @@ public class KeyController implements KeyListener, Updatable {
         boolean pressed = event.getEventType() == KeyEvent.KEY_PRESSED;
         switch (event.getCode()) {
             case A:
-                isLeftPressed = pressed;
+                RemoteUtil.async(()->controllService.setLeft(pressed));
                 break;
             case D:
-                isRightPressed = pressed;
+                RemoteUtil.async(()->controllService.setRight(pressed));
                 break;
             case W:
-                isUpPressed = pressed;
+                RemoteUtil.async(()->controllService.setForward(pressed));
                 break;
             case S:
-                isDownPressed = pressed;
+                RemoteUtil.async(()->controllService.setBackward(pressed));
                 break;
         }
 

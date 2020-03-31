@@ -11,7 +11,8 @@ public class NameService extends Service implements INameService {
 
     private final List<String> playerNames;
 
-    public NameService() throws RemoteException {
+    public NameService(String name) throws RemoteException {
+        super(name);
         this.playerNames = new ArrayList<>();
     }
 

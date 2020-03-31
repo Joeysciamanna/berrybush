@@ -1,5 +1,6 @@
 package ch.g_7.berrybush.common;
 
+import ch.g_7.berrybush.math.Vector2f;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -29,6 +30,10 @@ public class Util {
     @SafeVarargs
     public static <T> T randomFormList(T... ts){
         return randomFormList(Arrays.asList(ts));
+    }
+
+    public static Vector2f randomPosition(int xFrom, int xTo, int yFrom, int yTo){
+        return new Vector2f(random(xFrom, xTo), random(yFrom, yTo));
     }
 
 

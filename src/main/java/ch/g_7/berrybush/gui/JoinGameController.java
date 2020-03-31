@@ -6,22 +6,17 @@ import ch.g_7.berrybush.common.ViewController;
 import ch.g_7.berrybush.main.Const;
 import ch.g_7.berrybush.server.RemoteUtil;
 import ch.g_7.berrybush.server.ServiceType;
+import ch.g_7.berrybush.server.game.IGameService;
 import ch.g_7.berrybush.server.session.ISessionService;
 import ch.g_7.berrybush.server.session.Session;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableStringValue;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
-import java.io.Serializable;
-import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,16 +73,16 @@ public class JoinGameController extends ViewController {
 
     private void joinGame() {
         Session session = table.getSelectionModel().getSelectedItem();
-        boolean joined = false;
+        IGameService gameService;
         if(session.isOpen()) {
-            joined = RemoteUtil.invoke(() -> sessionService.join(session.getName(), Const.getUserName()));
+            gameService = RemoteUtil.get(() -> sessionService.join(session.getName(), Const.getUserName()));
         }else{
             Optional<String> pw = Util.showInputDialog("Password Required", "Please enter the Password");
             if(pw.isEmpty())
                 return;
-            joined = RemoteUtil.invoke(()->sessionService.join(session.getName(), Const.getUserName(), pw.get()));
+            gameService = RemoteUtil.get(()->sessionService.join(session.getName(), Const.getUserName(), pw.get()));
         }
-        if(!joined){
+        if(gameService == null){
             Util.showAlertDialog("Can't connect", "Can't join selected Server, password may be wrong");
         }else{
             getNavigator().goTo(SceneType.GAME, session.getName());
@@ -95,7 +90,7 @@ public class JoinGameController extends ViewController {
     }
 
     private void refresh(){
-        List<Session> sessions = RemoteUtil.invoke(()->sessionService.getAll());
+        List<Session> sessions = RemoteUtil.get(()->sessionService.getAll());
         table.setItems(FXCollections.observableList(sessions));
     }
 

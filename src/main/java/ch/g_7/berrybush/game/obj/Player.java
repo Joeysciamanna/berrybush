@@ -9,8 +9,8 @@ public class Player extends GameObject {
     private final String name;
 
 
-    public Player(Vector2f position, String name) {
-        super(position, ImageType.PLAYER);
+    public Player(Vector2f position, String name, int id) {
+        super(position, ImageType.PLAYER, id);
         this.name = name;
     }
 
@@ -18,4 +18,8 @@ public class Player extends GameObject {
         return name;
     }
 
+    @Override
+    public void update(double deltaSeconds) {
+        System.out.println(getTransform().getPosition());
+    }
 }

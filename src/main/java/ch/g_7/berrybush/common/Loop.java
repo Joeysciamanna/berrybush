@@ -1,10 +1,12 @@
-package ch.g_7.berrybush.server.game;
+package ch.g_7.berrybush.common;
+
+import ch.g_7.berrybush.server.game.Timer;
 
 import java.sql.Time;
 
 public abstract class Loop implements Runnable {
 
-    private final Timer timer;
+    protected final Timer timer;
     private Thread thread;
     private boolean running;
 
@@ -15,12 +17,12 @@ public abstract class Loop implements Runnable {
     @Override
     public final void run() {
         while (running) {
-            run(timer.getDeltaMillis());
-            timer.sleep(5);
+            timer.loop();
+            run(timer.getDeltaSeconds());
         }
     }
 
-    protected abstract void run(float deltaSeconds);
+    protected abstract void run(double deltaSeconds);
 
     protected final void setRunning(boolean running) {
         if (running && !this.running) {
