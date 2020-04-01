@@ -85,7 +85,7 @@ public class JoinGameController extends ViewController {
         if(gameService == null){
             Util.showAlertDialog("Can't connect", "Can't join selected Server, password may be wrong");
         }else{
-            getNavigator().goTo(SceneType.GAME, session.getName());
+            getNavigator().goTo(SceneType.GAME, gameService);
         }
     }
 

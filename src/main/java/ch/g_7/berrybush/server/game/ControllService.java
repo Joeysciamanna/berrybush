@@ -1,8 +1,10 @@
 package ch.g_7.berrybush.server.game;
 
+import ch.g_7.berrybush.framework.Camera;
 import ch.g_7.berrybush.framework.Updatable;
 import ch.g_7.berrybush.game.obj.Player;
 import ch.g_7.berrybush.main.Const;
+import ch.g_7.berrybush.math.Transform;
 import ch.g_7.berrybush.server.Service;
 
 import java.rmi.RemoteException;
@@ -10,6 +12,7 @@ import java.rmi.RemoteException;
 public class ControllService extends Service implements IControllService, Updatable {
 
     private Player player;
+    private Camera camera;
 
     private boolean forward;
     private boolean backward;
@@ -24,6 +27,8 @@ public class ControllService extends Service implements IControllService, Updata
         if(this.player != null)
             throw new IllegalStateException("Player already set");
         this.player = player;
+        this.camera = new Camera();
+        this.camera.setPosition(player.getTransform().getPosition());
     }
 
     @Override
@@ -40,6 +45,11 @@ public class ControllService extends Service implements IControllService, Updata
         if(left){
             player.getTransform().getPosition().x += Const.MOVEMENT_SPEED * deltaSeconds;
         }
+    }
+
+    @Override
+    public Camera getCamera() throws RemoteException {
+        return camera;
     }
 
     @Override

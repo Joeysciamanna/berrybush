@@ -13,5 +13,5 @@ public interface IGameService extends IService {
 
     List<BasicViewModel> getAllViewModels() throws RemoteException;
 
-    List<BasicViewModel> getChangedViewModels() throws RemoteException;
+
 }

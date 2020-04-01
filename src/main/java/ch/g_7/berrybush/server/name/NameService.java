@@ -2,6 +2,7 @@ package ch.g_7.berrybush.server.name;
 
 import ch.g_7.berrybush.common.Util;
 import ch.g_7.berrybush.server.Service;
+import ch.g_7.util.logging.StaticLogger;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class NameService extends Service implements INameService {
     @Override
     public synchronized boolean register(String name) {
         if(playerNames.contains(name)) return false;
+        StaticLogger.debug("New Player [" + name + "]");
         playerNames.add(name);
         return true;
     }

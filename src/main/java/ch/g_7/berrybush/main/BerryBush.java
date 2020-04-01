@@ -1,6 +1,9 @@
 package ch.g_7.berrybush.main;
 
 import ch.g_7.berrybush.gui.*;
+import ch.g_7.util.helper.AppInitializer;
+import ch.g_7.util.io.LocalFileLoader;
+import ch.g_7.util.logging.Logger;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import ch.g_7.berrybush.common.Navigator;
@@ -14,6 +17,9 @@ public class BerryBush extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        AppInitializer appInitializer = new AppInitializer(true, "BerryBush", new LocalFileLoader() {});
+        appInitializer.runDefaults("properties.prop");
+
         stage.setTitle("BerryBush Online Battle Royal");
 
         Navigator navigator = new Navigator(stage);

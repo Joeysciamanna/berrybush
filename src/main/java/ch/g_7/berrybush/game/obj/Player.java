@@ -18,8 +18,4 @@ public class Player extends GameObject {
         return name;
     }
 
-    @Override
-    public void update(double deltaSeconds) {
-        System.out.println(getTransform().getPosition());
-    }
 }

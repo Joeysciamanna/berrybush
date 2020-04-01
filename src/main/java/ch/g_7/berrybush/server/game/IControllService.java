@@ -1,5 +1,7 @@
 package ch.g_7.berrybush.server.game;
 
+import ch.g_7.berrybush.framework.Camera;
+import ch.g_7.berrybush.math.Transform;
 import ch.g_7.berrybush.server.IService;
 
 import java.rmi.RemoteException;
@@ -18,4 +20,5 @@ public interface IControllService extends IService {
 
     void shoot() throws RemoteException;
 
+    Camera getCamera() throws RemoteException;
 }

@@ -18,6 +18,7 @@ import ch.g_7.berrybush.server.game.ControllService;
 import ch.g_7.berrybush.server.game.GameService;
 import ch.g_7.berrybush.server.game.IControllService;
 import ch.g_7.berrybush.server.game.IGameService;
+import ch.g_7.util.helper.AppInitializer;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class BerryBushWorld extends Loop {
 
     private List<BasicViewModel> viewModels;
 
-    protected final Camera camera;
+    protected Camera camera;
     private final Renderer renderer;
 
     protected Runnable stopper;
@@ -62,13 +63,10 @@ public class BerryBushWorld extends Loop {
 
     @Override
     protected void run(double deltaSeconds) {
-        List<BasicViewModel> viewModels = RemoteUtil.get(gameService::getChangedViewModels);
-        for (BasicViewModel viewModel : this.viewModels) {
-            if(viewModel)
-        }
+        setViewModels(RemoteUtil.get(gameService::getAllViewModels));
+        camera.set(RemoteUtil.get(controllService::getCamera));
         timer.sleep(1);
     }
-
 
 
     public synchronized void render(GraphicsContext gc){
@@ -81,15 +79,6 @@ public class BerryBushWorld extends Loop {
     public synchronized void stop() {
         stopper.run();
         super.stop();
-    }
-
-    private boolean contains(int id){
-        for (BasicViewModel viewModel : viewModels) {
-            if (viewModel.getId() == id){
-                return true;
-            }
-        }
-        return false;
     }
 
     private synchronized void  setViewModels(List<BasicViewModel> viewModels){

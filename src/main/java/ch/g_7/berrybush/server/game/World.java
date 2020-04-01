@@ -55,7 +55,7 @@ public class World {
     }
 
     public void add(GameObject object){
-        gameObjects.add(object);
+        gameObjects.add(0, object);
     }
 
     public void remove(GameObject object){

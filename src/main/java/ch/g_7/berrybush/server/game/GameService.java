@@ -4,6 +4,7 @@ import ch.g_7.berrybush.game.obj.GameObject;
 import ch.g_7.berrybush.game.view_model.BasicViewModel;
 import ch.g_7.berrybush.server.BerryBushServer;
 import ch.g_7.berrybush.server.Service;
+import ch.g_7.util.logging.StaticLogger;
 
 import java.rmi.RemoteException;
 import java.util.List;
@@ -21,17 +22,13 @@ public class GameService extends Service implements IGameService {
 
 
     public void addPlayer(String player) {
+        StaticLogger.debug("New Player ["+player+"] in Session ["+game.getName()+"]");
         game.addPlayer(player);
     }
 
     @Override
     public List<BasicViewModel> getAllViewModels() {
         return game.getAllViewModels();
-    }
-
-    @Override
-    public List<BasicViewModel> getChangedViewModels() throws RemoteException {
-        return game.getChangingViewModels();
     }
 
     @Override

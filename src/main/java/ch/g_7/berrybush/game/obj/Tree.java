@@ -9,6 +9,7 @@ public class Tree extends GameObject {
 
     public Tree(Vector2f position, int id) {
         super(position, Util.randomFormList(ImageType.TREE_1, ImageType.TREE_2), id);
+        getTransform().getScale().mul(5);
     }
 
 }

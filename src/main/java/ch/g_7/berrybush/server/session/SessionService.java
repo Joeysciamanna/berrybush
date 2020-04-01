@@ -6,6 +6,7 @@ import ch.g_7.berrybush.server.Service;
 import ch.g_7.berrybush.server.ServiceType;
 import ch.g_7.berrybush.server.game.GameService;
 import ch.g_7.berrybush.server.game.IGameService;
+import ch.g_7.util.logging.StaticLogger;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class SessionService extends Service implements ISessionService {
     public IGameService create(Session session) {
         if(exists(session.getName()))
             return null;
+        StaticLogger.debug("New Game Session [" + session.getName() + "]");
         sessions.add(session);
         GameService service = BerryBushServer.register(GameService::new, "game/" + session.getName());
         session.setGameService(service);

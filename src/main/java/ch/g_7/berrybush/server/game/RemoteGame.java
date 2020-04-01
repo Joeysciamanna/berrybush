@@ -23,20 +23,18 @@ public class RemoteGame extends Loop {
     private final World world;
     private List<Updatable> updatables;
 
-    private List<BasicViewModel> changingViewModels;
 
     public RemoteGame(String name) {
         this.name = name;
         this.world = new World();
         this.updatables = new ArrayList<>();
-        this.changingViewModels = new ArrayList<>();
         load();
     }
 
     private void load() {
         for (int i = 0; i < 30; i++) {
             Vector2f pos = Util.randomPosition(-Const.SCREEN_WIDTH, Const.SCREEN_WIDTH, -Const.SCREEN_HEIGHT, Const.SCREEN_HEIGHT);
-            addStatic(new Tree(pos, nextId()));
+            add(new Tree(pos, nextId()));
         }
     }
 
@@ -45,7 +43,7 @@ public class RemoteGame extends Loop {
     }
 
     public void addPlayer(String playerName) {
-       addChanging(new Player(new Vector2f(), playerName, nextId()));
+       add(new Player(new Vector2f(), playerName, nextId()));
     }
 
     public Optional<Player> getPlayer(String playerName){
@@ -59,14 +57,10 @@ public class RemoteGame extends Loop {
         timer.sleep(5);
     }
 
-    private void addStatic(GameObject gameObject){
+    private void add(GameObject gameObject){
         world.add(gameObject);
     }
 
-    private void addChanging(GameObject gameObject){
-        world.add(gameObject);
-        changingViewModels.add(gameObject.getViewModel());
-    }
 
     public void addUpdatable(Updatable updatable){
         updatables.add(updatable);
@@ -74,10 +68,6 @@ public class RemoteGame extends Loop {
 
     public List<BasicViewModel> getAllViewModels(){
         return world.getGameObjects().stream().map(GameObject::getViewModel).collect(Collectors.toList());
-    }
-
-    public List<BasicViewModel> getChangingViewModels(){
-        return changingViewModels;
     }
 
     private int idCounter = 0;
