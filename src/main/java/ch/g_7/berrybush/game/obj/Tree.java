@@ -12,4 +12,6 @@ public class Tree extends GameObject {
         getTransform().getScale().mul(5);
     }
 
+
+
 }

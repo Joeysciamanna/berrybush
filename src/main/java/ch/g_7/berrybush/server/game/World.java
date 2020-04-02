@@ -1,6 +1,6 @@
 package ch.g_7.berrybush.server.game;
 
-import ch.g_7.berrybush.game.obj.GameObject;
+import ch.g_7.berrybush.framework.IEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,73 +11,73 @@ import java.util.stream.Collectors;
 
 public class World {
 
-    private final List<GameObject> gameObjects;
+    private final List<IEntity> entities;
 
 
     public World() {
-        gameObjects = new ArrayList<>();
+        entities = new ArrayList<>();
     }
 
 
-    public void safeForEach(Consumer<GameObject> consumer){
-        for (GameObject gameObject : new ArrayList<>(gameObjects)) {
+    public void safeForEach(Consumer<IEntity> consumer){
+        for (IEntity gameObject : new ArrayList<>(entities)) {
             consumer.accept(gameObject);
         }
     }
 
-    public void forEach(Consumer<GameObject> consumer){
-        for (GameObject gameObject : gameObjects) {
+    public void forEach(Consumer<IEntity> consumer){
+        for (IEntity gameObject : entities) {
             consumer.accept(gameObject);
         }
     }
 
-    public <T extends GameObject> List<T> getGameObjectsOfTypeWhere(Class<T> type, Predicate<T> predicate) {
-        return getGameObjectsOfType(type).stream().filter(predicate).collect(Collectors.toList());
+    public <T extends IEntity> List<T> getEntitiesOfTypeWhere(Class<T> type, Predicate<T> predicate) {
+        return getEntitiesOfType(type).stream().filter(predicate).collect(Collectors.toList());
     }
 
-    public <T extends GameObject> Optional<T> getGameObjectOfTypeWhere(Class<T> type, Predicate<T> predicate) {
-        return getGameObjectsOfType(type).stream().filter(predicate).findFirst();
+    public <T extends IEntity> Optional<T> getEntityOfTypeWhere(Class<T> type, Predicate<T> predicate) {
+        return getEntitiesOfType(type).stream().filter(predicate).findFirst();
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends GameObject> List<T> getGameObjectsOfType(Class<T> classToFind) {
+    public <T extends IEntity> List<T> getEntitiesOfType(Class<T> classToFind) {
         List<T> resultList = new ArrayList<T>();
-        for (Object o : gameObjects) {
+        for (Object o : entities) {
             if (classToFind.isAssignableFrom(o.getClass()))
                 resultList.add((T) o);
         }
         return resultList;
     }
 
-    public <T extends GameObject> Optional<T> getGameObjectOfType(Class<T> type){
-        List<T> gameObjects = getGameObjectsOfType(type);
+    public <T extends IEntity> Optional<T> getEntityOfType(Class<T> type){
+        List<T> gameObjects = getEntitiesOfType(type);
         return gameObjects.isEmpty() ? Optional.empty() : Optional.of(gameObjects.get(0));
     }
 
-    public void add(GameObject object){
-        gameObjects.add(0, object);
+    public void add(IEntity object){
+        entities.add(0, object);
     }
 
-    public void remove(GameObject object){
-        gameObjects.remove(object);
+    public void remove(IEntity object){
+        entities.remove(object);
     }
 
-    public void removeAllOfType(Class<? extends GameObject> type){
-        for (GameObject gameObject : gameObjects) {
+    public void removeAllOfType(Class<? extends IEntity> type){
+        for (IEntity gameObject : entities) {
             remove(gameObject);
         }
     }
 
     public void removeAll(){
-        gameObjects.clear();
+        entities.clear();
     }
 
-    public boolean contains(GameObject gameObject){
-        return gameObjects.contains(gameObject);
+    public boolean contains(IEntity gameObject){
+        return entities.contains(gameObject);
     }
 
-    public List<GameObject> getGameObjects(){
-        return  gameObjects;
+    public List<IEntity> getEntities(){
+        return entities;
     }
 
 

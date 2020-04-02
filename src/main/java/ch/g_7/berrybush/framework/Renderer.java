@@ -14,16 +14,16 @@ public class Renderer {
         this.camera = camera;
     }
 
-    public void render(List<? extends Renderable> renderables, GraphicsContext gc){
+    public void render(List<? extends IViewModel> viewModels, GraphicsContext gc){
 
 
 
-        for (Renderable renderable : renderables) {
+        for (IViewModel viewModel : viewModels) {
             gc.save();
             gc.rotate(-camera.getRotation());
             gc.translate(camera.getPosition().x + Const.SCREEN_WIDTH / 2, camera.getPosition().y + Const.SCREEN_HEIGHT / 2);
-            translate(renderable.getTransform(), gc);
-            renderable.draw(gc);
+            translate(viewModel.getTransform(), gc);
+            viewModel.draw(gc);
             gc.restore();
         }
 

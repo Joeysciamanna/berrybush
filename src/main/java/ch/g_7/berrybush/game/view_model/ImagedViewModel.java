@@ -9,19 +9,24 @@ public class ImagedViewModel extends BasicViewModel {
 
     private ImageType imageType;
 
-    public ImagedViewModel(Vector2f position, ImageType imageType, int id) {
-        super(position, new Vector2f((float) imageType.getImage().getWidth(), (float) imageType.getImage().getHeight()), id);
-        this.imageType = imageType;
+    public ImagedViewModel(ImageType imageType, int id) {
+        super(id);
+        setImageType(imageType);
     }
+
 
     @Override
     public void draw(GraphicsContext graphicsContext) {
         graphicsContext.drawImage(imageType.getImage(), 0, 0, getTransform().getScale().x, getTransform().getScale().y);
     }
 
+    public void calculateScale(){
+        getTransform().setScale(new Vector2f((float) imageType.getImage().getWidth(), (float) imageType.getImage().getHeight()));
+    }
+
     public void setImageType(ImageType imageType) {
         this.imageType = imageType;
-        getTransform().setScale(new Vector2f((float) imageType.getImage().getWidth(), (float) imageType.getImage().getHeight()));
+        calculateScale();
     }
 
 

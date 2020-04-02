@@ -4,7 +4,7 @@ import ch.g_7.berrybush.main.Resource;
 import javafx.scene.image.Image;
 
 public enum ImageType {
-    PLAYER, TREE_1, TREE_2;
+    PLAYER, TREE_1, TREE_2, CHEST, CHEST_OPEN;
 
 
     public Image getImage() {
