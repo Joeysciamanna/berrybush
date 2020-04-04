@@ -6,6 +6,7 @@ import ch.g_7.berrybush.common.Loop;
 import ch.g_7.berrybush.common.Navigator;
 import ch.g_7.berrybush.common.Util;
 import ch.g_7.berrybush.framework.Camera;
+import ch.g_7.berrybush.framework.IViewModel;
 import ch.g_7.berrybush.framework.Renderer;
 import ch.g_7.berrybush.game.obj.Player;
 import ch.g_7.berrybush.game.obj.Tree;
@@ -26,7 +27,7 @@ import java.util.List;
 
 public class BerryBushWorld extends Loop {
 
-    private List<BasicViewModel> viewModels;
+    private List<IViewModel> viewModels;
 
     protected Camera camera;
     private final Renderer renderer;
@@ -81,7 +82,7 @@ public class BerryBushWorld extends Loop {
         super.stop();
     }
 
-    private synchronized void  setViewModels(List<BasicViewModel> viewModels){
+    private synchronized void  setViewModels(List<IViewModel> viewModels){
         this.viewModels = viewModels;
     }
 

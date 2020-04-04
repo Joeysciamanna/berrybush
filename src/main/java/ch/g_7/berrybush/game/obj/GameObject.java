@@ -10,6 +10,7 @@ import ch.g_7.berrybush.game.view_model.ImageType;
 import ch.g_7.berrybush.game.view_model.ImagedViewModel;
 import ch.g_7.berrybush.math.Transform;
 import ch.g_7.berrybush.math.Vector2f;
+import javafx.geometry.BoundingBox;
 
 
 public abstract class GameObject<T extends IViewModel> implements IEntity {
@@ -26,6 +27,10 @@ public abstract class GameObject<T extends IViewModel> implements IEntity {
     @Override
     public void update(double deltaSeconds) { }
 
+    @Override
+    public BoundingBox getBoundingBox() {
+        return new BoundingBox(getX(), getY(), getTransform().getScale().x, getTransform().getScale().y);
+    }
 
     @Override
     public Transform getTransform() {
@@ -53,6 +58,5 @@ public abstract class GameObject<T extends IViewModel> implements IEntity {
     protected float getY(){
         return viewModel.getTransform().getPosition().y;
     }
-
 
 }

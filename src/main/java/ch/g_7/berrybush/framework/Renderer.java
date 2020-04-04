@@ -15,9 +15,6 @@ public class Renderer {
     }
 
     public void render(List<? extends IViewModel> viewModels, GraphicsContext gc){
-
-
-
         for (IViewModel viewModel : viewModels) {
             gc.save();
             gc.rotate(-camera.getRotation());

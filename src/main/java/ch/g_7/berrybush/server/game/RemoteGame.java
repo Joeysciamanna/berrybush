@@ -7,6 +7,7 @@ import ch.g_7.berrybush.framework.IViewModel;
 import ch.g_7.berrybush.framework.Updatable;
 import ch.g_7.berrybush.game.obj.GameObject;
 import ch.g_7.berrybush.game.obj.Player;
+import ch.g_7.berrybush.game.obj.Stone;
 import ch.g_7.berrybush.game.obj.Tree;
 import ch.g_7.berrybush.main.Const;
 import ch.g_7.berrybush.math.Vector2f;
@@ -35,7 +36,7 @@ public class RemoteGame extends Loop {
     private void loadEntities() {
         for (int i = 0; i < 30; i++) {
             Vector2f pos = Util.randomPosition(-Const.SCREEN_WIDTH, Const.SCREEN_WIDTH, -Const.SCREEN_HEIGHT, Const.SCREEN_HEIGHT);
-            add(new Tree(pos, nextId()));
+            add(new Stone(pos, new Vector2f(30,30), world, nextId()));
         }
 
     }
@@ -56,6 +57,7 @@ public class RemoteGame extends Loop {
     protected void run(double deltaSeconds) {
         world.safeForEach((o)->o.update(deltaSeconds));
         updatables.forEach((u)->u.update(deltaSeconds));
+        collisionHandler.update(deltaSeconds);
         timer.sleep(5);
     }
 

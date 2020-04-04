@@ -1,5 +1,6 @@
 package ch.g_7.berrybush.game.obj;
 
+import ch.g_7.berrybush.game.item.IArmor;
 import ch.g_7.berrybush.game.item.ITool;
 import ch.g_7.berrybush.game.view_model.ImageType;
 import ch.g_7.berrybush.game.view_model.ImagedViewModel;
@@ -8,7 +9,7 @@ import ch.g_7.berrybush.math.Vector2f;
 import java.awt.*;
 
 
-public class Player extends GameObject implements Damagable {
+public class Player extends GameObject<ImagedViewModel> implements Damagable, ITool {
 
     private final String name;
     private int health;
@@ -27,7 +28,22 @@ public class Player extends GameObject implements Damagable {
 
 
     @Override
-    public void damage(IBeeing beeing, ITool tool) {
+    public void damage(ITool tool) {
 
+    }
+
+    @Override
+    public void doBreak() {
+
+    }
+
+    @Override
+    public int useOn(Damagable damagable, IArmor armor) {
+        return 0;
+    }
+
+    @Override
+    public IBeeing getOwner() {
+        return null;
     }
 }

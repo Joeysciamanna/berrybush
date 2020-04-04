@@ -1,5 +1,6 @@
 package ch.g_7.berrybush.server.game;
 
+import ch.g_7.berrybush.framework.IViewModel;
 import ch.g_7.berrybush.game.view_model.BasicViewModel;
 import ch.g_7.berrybush.server.IService;
 
@@ -11,7 +12,7 @@ public interface IGameService extends IService {
 
     IControllService getControllService(String player) throws RemoteException;
 
-    List<BasicViewModel> getAllViewModels() throws RemoteException;
+    List<IViewModel> getAllViewModels() throws RemoteException;
 
 
 }

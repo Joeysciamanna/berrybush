@@ -1,5 +1,6 @@
 package ch.g_7.berrybush.server.game;
 
+import ch.g_7.berrybush.framework.IViewModel;
 import ch.g_7.berrybush.game.obj.GameObject;
 import ch.g_7.berrybush.game.view_model.BasicViewModel;
 import ch.g_7.berrybush.server.BerryBushServer;
@@ -27,7 +28,7 @@ public class GameService extends Service implements IGameService {
     }
 
     @Override
-    public List<BasicViewModel> getAllViewModels() {
+    public List<IViewModel> getAllViewModels() {
         return game.getAllViewModels();
     }
 

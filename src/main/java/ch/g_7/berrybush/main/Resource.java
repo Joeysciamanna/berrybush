@@ -16,6 +16,15 @@ public class Resource {
     public static final Image TREE_1 = loadImage("/images/tree1.png");
     public static final Image TREE_2 = loadImage("/images/tree2.png");
 
+    public static final Image STONE_CLUSTER_1 = loadImage("/images/stone_cluster/clean_1.png");
+    public static final Image STONE_CLUSTER_2 = loadImage("/images/stone_cluster/clean_2.png");
+    public static final Image STONE_CLUSTER_3 = loadImage("/images/stone_cluster/clean_3.png");
+    public static final Image[] STONE_CLUSTERS = new Image[]{ STONE_CLUSTER_1, STONE_CLUSTER_2, STONE_CLUSTER_2 };
+    public static final Image IRON_CLUSTER_1 = loadImage("/images/stone_cluster/iron_1.png");
+    public static final Image IRON_CLUSTER_2 = loadImage("/images/stone_cluster/iron_2.png");
+    public static final Image IRON_CLUSTER_3 = loadImage("/images/stone_cluster/iron_3.png");
+
+
     public static final String MAIN_MENU_FXML = "/fxml/main_menu.fxml";
     public static final String JOIN_GAME_FXML = "/fxml/join_game.fxml";
     public static final String NEW_GAME_FXML = "/fxml/new_game.fxml";

@@ -31,7 +31,7 @@ public class LootChest extends GameObject<ImagedViewModel> implements Interactab
     public boolean interact(IBeeing beeing, ITool tool) {
         if (open)
             return false;
-        getViewModel().setImageType(ImageType.CHEST_OPEN);
+        ((ImagedViewModel) getViewModel()).setImageType(ImageType.CHEST_OPEN);
         items.forEach(this::drop);
         open = true;
         return true;
